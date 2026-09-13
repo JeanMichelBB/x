@@ -23,6 +23,8 @@ from app.models import User, Tweet, Message
 from sqlalchemy import event
 from prometheus_client import Gauge
 from prometheus_fastapi_instrumentator import Instrumentator
+from opentelemetry.instrumentation.fastapi import FastAPIInstrumentor
+from app.tracing import setup_tracing
 event.listen(Tweet, 'after_insert', enforce_tweet_limit)
 event.listen(User, 'after_insert', enforce_user_limit)
 event.listen(Message, 'after_insert', enforce_message_limit)
@@ -106,6 +108,9 @@ app.include_router(bookmarks)
 app.include_router(lists)
 
 Instrumentator().instrument(app).expose(app, include_in_schema=False)
+
+setup_tracing("x", engine=engine)
+FastAPIInstrumentor.instrument_app(app)
 
 app.add_middleware(
     CORSMiddleware,
