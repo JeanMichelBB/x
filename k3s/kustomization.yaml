@@ -9,7 +9,7 @@ resources:
 
 images:
   - name: jeanmichelbb/twc-frontend
-    newTag: d231399719f7e985ae9c19ef636ab9fc224a848a
+    newTag: 059bece9b06ae6b6c5838a178a90de2471f014c6
     newName: jeanmichelbb/twc-frontend
   - name: jeanmichelbb/twc-backend
     newTag: 93a89f10728706112e25242332c4f030ba1a007e
