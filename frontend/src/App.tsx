@@ -34,6 +34,9 @@ axios.interceptors.response.use(
   }
 );
 
+// Demo deployment: no real accounts, auto-login as one of the seeded fictive users on first visit.
+const DEMO_PASSWORD = 'password';
+
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -45,7 +48,24 @@ function App() {
   useEffect(() => {
     const checkAuthenticated = async () => {
       try {
-        const token = localStorage.getItem('token');
+        let token = localStorage.getItem('token');
+        if (!token) {
+          try {
+            const usersResponse = await axios.get(`${apiUrl}/users`);
+            const demoUsername = usersResponse.data?.[0]?.username;
+            if (demoUsername) {
+              const loginResponse = await axios.get(`${apiUrl}/login`, {
+                params: { username: demoUsername, password: DEMO_PASSWORD },
+              });
+              token = loginResponse.data.access_token;
+              if (token) {
+                localStorage.setItem('token', token);
+              }
+            }
+          } catch (loginErr) {
+            console.error('Auto-login error:', loginErr);
+          }
+        }
         if (token) {
           const response = await axios.get(`${apiUrl}/protected`, {
             headers: { ...getAuthHeader() },
