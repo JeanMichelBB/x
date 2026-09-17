@@ -13,5 +13,5 @@ images:
     newTag: f3c8bb1904b6d1c033be0370438c64fe7beaed9b
     newName: jeanmichelbb/twc-frontend
   - name: jeanmichelbb/twc-backend
-    newTag: d775dd0d718de47f1a43f30e7c4eaf4974a9b443
+    newTag: f3c8bb1904b6d1c033be0370438c64fe7beaed9b
     newName: jeanmichelbb/twc-backend
