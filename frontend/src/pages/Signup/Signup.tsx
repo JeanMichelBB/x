@@ -22,7 +22,7 @@ const Signup = () => {
     const existingUsernames = users.map((user) => user.username);
     let suggestedUsername;
     do {
-      suggestedUsername = faker.internet.userName();
+      suggestedUsername = faker.internet.username();
     } while (existingUsernames.includes(suggestedUsername));
     return suggestedUsername;
   };
